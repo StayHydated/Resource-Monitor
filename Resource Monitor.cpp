@@ -330,14 +330,12 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
         int x = GetPrivateProfileIntA(counterID, "x", 300, settingsPath);
         int y = GetPrivateProfileIntA(counterID, "y", 200, settingsPath);
-        int width = GetPrivateProfileIntA(counterID, "width", 200, settingsPath);
-        int height = GetPrivateProfileIntA(counterID, "height", 200, settingsPath);
         HWND counterHwnd = CreateWindowEx(
             0,
             counterWinClass,
             NULL,
             WS_CHILD | WS_VISIBLE,
-            x, y, width, height,
+            x, y, 100, 100,
             parent,       // Parent window    
             reinterpret_cast<HMENU>(atoi(counterID)),       // Menu
             hInst,      // Instance handle
@@ -350,6 +348,7 @@ int CALLBACK WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         }
         ShowWindow(counterHwnd, SW_SHOW);
         UpdateWindow(counterHwnd);
+
 
         if (atoi(counterID) >= uniqueCounterID) {
             uniqueCounterID = atoi(counterID) + 1;
@@ -605,8 +604,6 @@ void createNewCounter(LPCSTR counterType) {
     // add x, y, height, and width to settings
     WritePrivateProfileStringA(counterID, "x", "300", settingsPath);
     WritePrivateProfileStringA(counterID, "y", "200", settingsPath);
-    WritePrivateProfileStringA(counterID, "width", "200", settingsPath);
-    WritePrivateProfileStringA(counterID, "height", "200", settingsPath);
 
     HWND counterHwnd = CreateWindowEx(
         0,
@@ -1151,7 +1148,7 @@ LRESULT CALLBACK CounterProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
         // set font, font color, and background transparency
         SetTextColor(hdc, RGB(counterInfo->r, counterInfo->g, counterInfo->b));
         hFont = CreateFontA(counterInfo->fontSize, 0, 0, 0, FW_DONTCARE, FALSE, counterInfo->underline, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
-            CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY, VARIABLE_PITCH, counterInfo->font);
+            CLIP_STROKE_PRECIS, PROOF_QUALITY, VARIABLE_PITCH, counterInfo->font);
         SelectObject(hdc, hFont);
         if (counterInfo->noBkg) {
             SetBkMode(hdc, TRANSPARENT);
@@ -1167,6 +1164,7 @@ LRESULT CALLBACK CounterProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
         GetWindowRect(hwnd, &currWin);
         MoveWindow(hwnd, currWin.left, currWin.top, textSize.cx, textSize.cy, FALSE);
 
+        SetBkColor(hdc, RGB(0, 0, 0));
         TextOutA(hdc, 0, 0, printBuffer, strlen(printBuffer));
         EndPaint(hwnd, &ps);
         break;
