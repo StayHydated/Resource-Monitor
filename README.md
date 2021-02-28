@@ -21,6 +21,6 @@ Ctrl+e opens the edit menu.
 
 Resource Monitor displays system hardware information such as CPU load, CPU frequency, and memory load in a transparent, HUD-like, always-on-top overlay. This allows hardware to be monitored without the use of a separate window such as Task Manager's performance tab.
 
-The overlay can be toggled on and off and is customizable. Individual counters can be moved around and their font, font color, font size, and background can be changed. Resource Monitor can also be launched on Windows startup.
+The overlay can be toggled on and off and is customizable. Individual counters can be moved around and their font, font color, font size, and background can be changed. Resource Monitor can also be launched on Windows startup and will preserve state across usage.
 
 Created with Win32 C++
